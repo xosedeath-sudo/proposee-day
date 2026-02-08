@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just One Question ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap');
+
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#05010d;
+  color:#fff;
+  overflow:hidden;
+}
+
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+  transition:opacity 0.8s ease;
+}
+
+.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+h1{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;
+  color:#ff77c8;
+}
+
+p{
+  max-width:700px;
+  font-size:18px;
+  line-height:1.8;
+  opacity:0.9;
+}
+
+button{
+  margin-top:25px;
+  padding:14px 34px;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  transition:transform .3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+.primary{
+  background:linear-gradient(45deg,#ff5fa2,#ffc1e3);
+  color:#000;
+  font-weight:600;
+}
+
+.secondary{
+  background:transparent;
+  color:#fff;
+  border:2px solid #ff77c8;
+}
+
+.no{
+  background:#160020;
+  color:#ff9ad5;
+  position:relative;
+}
+
+.progress{
+  position:fixed;
+  bottom:20px;
+  font-size:14px;
+  opacity:.6;
+}
+
+.spark{
+  position:fixed;
+  bottom:-10px;
+  animation:rise 6s linear infinite;
+}
+
+@keyframes rise{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Screen 1 -->
+<div class="screen" id="s1">
+  <h1>Hey.</h1>
+  <p>
+    Before anything else…<br>
+    I want you to slow down.<br>
+    Take a breath.<br>
+    And trust me for the next few moments.
+  </p>
+  <button class="primary" onclick="goTo(2)">Okay…</button>
+</div>
+
+<!-- Screen 2 -->
+<div class="screen hidden" id="s2">
+  <h1>This Isn’t Random</h1>
+  <p>
+    Some people don’t just enter your life.<br>
+    They change the way you think, feel, dream.<br>
+    They quietly become a part of your future… without asking.
+  </p>
+  <button class="secondary" onclick="goTo(3)">Tell me more</button>
+</div>
+
+<!-- Screen 3 -->
+<div class="screen hidden" id="s3">
+  <h1>Truth Time</h1>
+  <p>
+    I didn’t fall suddenly.<br>
+    I fell slowly.<br>
+    In conversations.<br>
+    In silences.<br>
+    In the comfort of knowing you exist.
+  </p>
+  <button class="primary" onclick="goTo(4)">I’m listening</button>
+</div>
+
+<!-- Screen 4 -->
+<div class="screen hidden" id="s4">
+  <h1>Choose One</h1>
+  <p>Be honest. No pressure.</p>
+  <button class="secondary" onclick="choose('safe')">I feel safe here</button>
+  <button class="secondary" onclick="choose('curious')">I feel curious</button>
+</div>
+
+<!-- Screen 5 -->
+<div class="screen hidden" id="s5">
+  <h1>Good.</h1>
+  <p id="choiceText"></p>
+  <button class="primary" onclick="goTo(6)">Continue</button>
+</div>
+
+<!-- Screen 6 -->
+<div class="screen hidden" id="s6">
+  <h1>So Here It Is 💍</h1>
+  <p>
+    Not a perfect promise.<br>
+    Not a fairy tale.<br>
+    Just a real heart asking another heart—
+  </p>
+  <p><strong>Will you choose me?</strong></p>
+
+  <button class="primary" onclick="yes()">Yes ❤️</button>
+  <button class="no" onmouseover="escape(this)">No 🙈</button>
+
+  <div class="progress">No wrong answers. Except that one 😌</div>
+</div>
+
+<script>
+let current = 1;
+
+function goTo(n){
+  document.getElementById("s"+current).classList.add("hidden");
+  current = n;
+  document.getElementById("s"+current).classList.remove("hidden");
+}
+
+function choose(type){
+  let text="";
+  if(type==="safe"){
+    text="That means more than you know. I want to be that place for you—always.";
+  }else{
+    text="Curiosity is how beautiful stories begin. I’m glad you stayed.";
+  }
+  document.getElementById("choiceText").innerText=text;
+  goTo(5);
+}
+
+function escape(btn){
+  btn.style.transform =
+    `translate(${Math.random()*400-200}px,${Math.random()*300-150}px)`;
+}
+
+function yes(){
+  document.body.innerHTML =
+  "<div class='screen'>" +
+  "<h1>You Said Yes 💖</h1>" +
+  "<p>This is the start of something real, messy, beautiful, and ours.</p>" +
+  "<p>I promise to choose you—every day.</p>" +
+  "</div>";
+}
+
+// floating sparks
+setInterval(()=>{
+  const s=document.createElement("div");
+  s.className="spark";
+  s.innerHTML="✨";
+  s.style.left=Math.random()*100+"vw";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),6000);
+},350);
+</script>
+
+</body>
+</html>
